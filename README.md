@@ -11,17 +11,21 @@
 
 ## Dependencies and locations
 * R packages:
-    * 
-    * 
-    * 
+    * data.table
+    * tidyverse
+    * KEGGREST
+    * ggplot2
+    * pathview
+    * ape
 * Python packages:
-    * 
-    * 
-    * 
+    * pandas
+    * sklearn
+    * re
+    * time
 * Tools needed for snakemake pipeline.
-    * 
-    * 
-    * 
+    * BBMap
+    * Bowtie 2
+    * metaSPAdes
 
 ## Running the ananlysis
 ```
