@@ -10,10 +10,7 @@
 
 # Run your Bash script
 bash expand_reads.sh
-#bash binning.sh
-#bash mapping.sh
 bash binning_individual.sh
-#bash mapping_all_contigs.sh
 bash compress_reads.sh
 bash mapping_drep_mags.sh
 bash gtdbtk.sh
