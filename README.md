@@ -6,7 +6,65 @@
  Viruses impact aquatic biogeochemistry via host cell lysis and rewiring host metabolic processes. However, their functional role in aquatic dark carbon cycling is mostly unexplored. Here, we established a method to identify active viruses targeting primary producers (chemoautotrophs) using $$13^{C}-DNA stable isotopic probing combined with metagenomics. 
 
  # Overview of directories and files
-
+.
+├── code
+│   ├── notebooks
+│   └── scr
+│       ├── python
+│       │   └── log_reports
+│       └── R
+├── data
+│   ├── processed
+│   │   └── smk_out
+│   │       ├── Assemblies
+│   │       │   ├── day0-DO-0-env-cell-control
+│   │       │   │   ├── anvio
+│   │       │   │   ├── bam
+│   │       │   │   ├── megahit
+│   │       │   │   └── virsorter_first
+│   │       │   ├── day0-DO-0-env-virus-control
+│   │       │   │   ├── anvio
+│   │       │   │   ├── checkv
+│   │       │   │   ├── megahit
+│   │       │   │   ├── virsorter_final
+│   │       │   │   └── virsorter_first
+│   │       │   ├── day7-DO-0-12C-cell-enriched
+│   │       │   │   ├── anvio
+│   │       │   │   ├── bam
+│   │       │   │   ├── megahit
+│   │       │   │   └── virsorter_first
+│   │       │   ├── day7-DO-0-12C-virus-enriched
+│   │       │   │   ├── anivo
+│   │       │   │   ├── checkv
+│   │       │   │   ├── megahit
+│   │       │   │   ├── virsorter_final
+│   │       │   │   └── virsorter_first
+│   │       │   ├── day7-DO-0-13C-cell-enriched
+│   │       │   │   ├── anvio
+│   │       │   │   ├── bam
+│   │       │   │   ├── megahit
+│   │       │   │   └── virsorter_first
+│   │       │   ├── day7-DO-0-13C-virus-enriched
+│   │       │       ├── anvio
+│   │       │       ├── checkv
+│   │       │       ├── megahit
+│   │       │       ├── virsorter_final
+│   │       │       └── virsorter_first
+│   │       ├── bins
+│   │       │   └── work_files
+│   │       └── reads
+│   │           ├── clean_reads
+│   │           ├── merged_reads
+│   │           ├── vcontig_cell_enriched_reads
+│   │           └── vcontig_env_cell_enriched_reads
+│   ├── raw
+│   └── temp_files
+├── documentation
+└── smk_workflow
+    ├── config
+    ├── reports
+    └── rules
+    
  # How to regenerate this repository
 
 ## Dependencies and locations
