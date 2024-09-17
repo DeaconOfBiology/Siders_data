@@ -3,16 +3,15 @@
 ## All the data and code needed to analysis the metagenomic data from DNA-SIP incubations of Siders pond sample
 
 # Summary
- Viruses impact aquatic biogeochemistry via host cell lysis and rewiring host metabolic processes. However, their functional role in aquatic dark carbon cycling is mostly unexplored. Here, we established a method to identify active viruses targeting primary producers (chemoautotrophs) using $$13^{C}-DNA stable isotopic probing combined with metagenomics. 
+ Viruses impact aquatic biogeochemistry via host cell lysis and rewiring host metabolic processes. However, their functional role in aquatic dark carbon cycling is mostly unexplored. Here, we established a method to identify active viruses targeting primary producers (chemoautotrophs) using <sup>13</sup>C-DNA stable isotopic probing combined with metagenomics. 
 
- # Overview of directories and files
+ # Overview of directories
 ```bash
 .
 ├── code
 │   ├── notebooks
 │   └── scr
 │       ├── python
-│       │   └── log_reports
 │       └── R
 ├── data
 │   ├── processed
