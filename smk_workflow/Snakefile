@@ -1,0 +1,23 @@
+# 1.
+#include: 'preprocess_reads.smk'
+include: 'elaine_preprocess_reads.smk'
+# 2.
+#include: 'new_create_and_analysis_assemblies.smk'
+#include: 'create_assemblies.smk'
+include: 'elaine_create_assemblies.smk'
+# 3.
+#include: 'cell_enriched_vcontig_identification.smk'
+include: 'elaine_cell_enriched_vcontig_identification.smk'
+# 3.
+#include: 'cell_enriched_vcontig_reads.smk'
+include: 'elaine_cell_enriched_vcontig_reads.smk'
+
+#4.
+#include: 'virus_enriched_votu_identification.smk'
+include: 'elaine_virus_enriched_votu_identification.smk'
+
+#4. 
+#include: 'new_Binning.smk'#Binning outside of this pipeline
+
+# 5. 
+#include: 'metabolic_analysis2.smk' 

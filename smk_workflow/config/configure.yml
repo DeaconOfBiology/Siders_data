@@ -1,0 +1,60 @@
+ROOT: "."
+Samples:
+    control:
+        cell:
+            day0-DO-0-env:
+                - "none"
+        virus:
+            day0-DO-0-env:
+                - "none"
+    enriched:
+        cell:
+            day7-DO-0-12C: 
+                - "1-6"
+                - "7"
+                - "8"
+                - "9"
+                - "10-12"
+            day7-DO-0-13C: 
+                - "1-5"
+                - "6"
+                - "7"
+                - "8"
+                - "9-12"
+        virus:
+            day7-DO-0-12C:
+                - "1-6"
+                - "7"
+                - "8"
+                - "9"
+                - "10-12"
+            day7-DO-0-13C:
+                - "1-6"
+                - "7"
+                - "8"
+                - "9"
+                - "10-12"
+#Log file pathway
+logs: "logs/"
+
+
+#Data processing pathways
+temp_files: "data/temp_files/"
+
+raw_reads: "data/raw_reads/"
+
+clean_reads: "data/processed/reads/"
+
+assemblies: "data/processed/Assemblies/"
+
+quality_checks: "data/processed/quailty_checks/"
+
+
+# Program pathways that are needed
+bbduk: "/projects/luo_lab/bbmap/"
+
+adapters: "/projects/luo_lab/bbmap/resources/"
+
+reference: "/projects/luo_lab/bbmap/resources/"
+#Anvio and bam files will go within the Assembly directories
+#Sam files will go within the temp directory
