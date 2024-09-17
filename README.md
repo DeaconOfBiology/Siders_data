@@ -10,18 +10,18 @@
  # How to regenerate this repository
 
 ## Dependencies and locations
-*R packages:
-    *
-    *
-    *
-*Python packages:
-    *
-    *
-    *
-*Tools needed for snakemake pipeline.
-    *
-    *
-    *
+* R packages:
+    * 
+    * 
+    * 
+* Python packages:
+    * 
+    * 
+    * 
+* Tools needed for snakemake pipeline.
+    * 
+    * 
+    * 
 
 ## Running the ananlysis
 ```
