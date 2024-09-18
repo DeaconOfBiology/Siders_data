@@ -57,3 +57,4 @@ data/processed/bins/
 data/processed/MAGs/
 data/processed/metabolic_predictions/
 data/processed/Taxonomy/
+data/processed/viral_derep_blast_dbs

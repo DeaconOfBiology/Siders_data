@@ -21,14 +21,14 @@ source ./file_paths.sh
 # and creates it if it doesn't. This directory is necessary for the
 # steps in the code below.
 
-if [ -d "$viral_derep_blast_dbs" ]
+if [ -d "$viral_derep_viral_derep_blast_dbs" ]
 then
     	echo "Blasts folder already exists, continuing..."
         echo
 else
     	echo "Blasts folder doesn't exist, creating and continuing..."
         echo
-	mkdir "$viral_derep_blast_dbs"
+	mkdir "$viral_derep_viral_derep_blast_dbs"
 fi
 
 
@@ -44,12 +44,17 @@ fi
 # (95% ANI + 85% AF).
 
 #Step 1
-find "$assemblies"/day?-DO-0-*-virus-*/anvio/clean_fasta_file -type f -name "contigs_clean_headers.fa" -exec cat {} + > "$assemblies"/combined_virus_contigs_clean_headers.fa
+#find "$assemblies"/day?-DO-0-*-virus-*/anvio/clean_fasta_file -type f -name "contigs_clean_headers.fa" -exec cat {} + > "$assemblies"/combined_virus_contigs_clean_headers.fa
 #Step 2
-makeblastdb -in "$assemblies"/combined_virus_contigs_clean_headers.fa -dbtype nucl -out "$blast_dbs"/viral_blast_db
+#makeblastdb -in "$assemblies"/combined_virus_contigs_clean_headers.fa -dbtype nucl -out "$viral_derep_blast_dbs"/viral_blast_db
 #Step 3
-blastn -query "$assemblies"/combined_virus_contigs_clean_headers.fa -db "$blast_dbs"/viral_blast_db -outfmt '6 std qlen slen' -max_target_seqs 10000 -o "$blast_dbs"/viral_blast.tsv -num_threads 32 
+#blastn -query "$assemblies"/combined_virus_contigs_clean_headers.fa -db "$viral_derep_blast_dbs"/viral_blast_db -outfmt '6 std qlen slen' -max_target_seqs 10000 -out "$viral_derep_blast_dbs"/viral_blast.tsv -num_threads 32 
 #Step 4
-./code/scr/python/anicalc.py -i "$blast_dbs"/viral_blast.tsv -o "$blast_dbs"/viral_blast_ani.tsv
+#"$work"/code/scr/python/anicalc.py -i "$viral_derep_blast_dbs"/viral_blast.tsv -o "$viral_derep_blast_dbs"/viral_blast_ani.tsv
 #Step 5
-./code/scr/python/aniclust.py --fna "$assemblies"/combined_virus_contigs_clean_headers.fa --ani "$blast_dbs"/viral_blast_ani.tsv --out "$blast_dbs"/viral_blast_clusters.tsv --min_ani 95 --min_tcov 85 --min_qcov 0 
+#"$work"/code/scr/python/aniclust.py --fna "$assemblies"/combined_virus_contigs_clean_headers.fa --ani "$viral_derep_blast_dbs"/viral_blast_ani.tsv --out "$viral_derep_blast_dbs"/viral_blast_clusters.tsv --min_ani 95 --min_tcov 85 --min_qcov 0 
+
+### This code chunk uses the representative column in viral_blast_clusters.tsv to extract the representative vOTUs into their own fasta file
+cut -f1 "$viral_derep_blast_dbs"/viral_blast_clusters.tsv > "$viral_derep_blast_dbs"/representative_votus.tsv
+seqkit grep -n -f "$viral_derep_blast_dbs"/representative_votus.tsv "$assemblies"/combined_virus_contigs_clean_headers.fa > "$assemblies"/representative_votus.fa
+seqkit seq -m 3000 "$assemblies"/representative_votus.fa -o "$assemblies"/representative_votus_3kbp.fa

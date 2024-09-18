@@ -1,0 +1,18 @@
+Blasts folder doesn't exist, creating and continuing...
+
+
+reading sequences...
+48925 sequences retained from fna
+time: 3.01 seconds, peak RAM: 0.02 GB
+
+storing edges...
+28496 edges retained from blastani
+28496 edges currently stored
+time: 3.39 seconds, peak RAM: 0.03 GB
+
+clustering...
+31488 total clusters
+time: 3.42 seconds, peak RAM: 0.03 GB
+
+writing clusters...
+time: 3.44 seconds, peak RAM: 0.03 GB
