@@ -50,6 +50,6 @@ makeblastdb -in "$assemblies"/combined_virus_contigs_clean_headers.fa -dbtype nu
 #Step 3
 blastn -query "$assemblies"/combined_virus_contigs_clean_headers.fa -db "$blast_dbs"/viral_blast_db -outfmt '6 std qlen slen' -max_target_seqs 10000 -o "$blast_dbs"/viral_blast.tsv -num_threads 32 
 #Step 4
-anicalc.py -i "$blast_dbs"/viral_blast.tsv -o "$blast_dbs"/viral_blast_ani.tsv
+./code/scr/python/anicalc.py -i "$blast_dbs"/viral_blast.tsv -o "$blast_dbs"/viral_blast_ani.tsv
 #Step 5
-aniclust.py --fna "$assemblies"/combined_virus_contigs_clean_headers.fa --ani "$blast_dbs"/viral_blast_ani.tsv --out "$blast_dbs"/viral_blast_clusters.tsv --min_ani 95 --min_tcov 85 --min_qcov 0 
+./code/scr/python/aniclust.py --fna "$assemblies"/combined_virus_contigs_clean_headers.fa --ani "$blast_dbs"/viral_blast_ani.tsv --out "$blast_dbs"/viral_blast_clusters.tsv --min_ani 95 --min_tcov 85 --min_qcov 0 
