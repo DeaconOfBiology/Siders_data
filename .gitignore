@@ -50,9 +50,10 @@ rsconnect/
 
 # Raw data
 data/raw/
-data/processed/smk_out/quailty_checks/
-data/processed/smk_out/reads/
-data/processed/smk_out/Assemblies/
-data/processed/smk_out/bins/
-data/processed/smk_out/MAGs/
-data/processed/smk_out/metabolic_predictions/
+data/processed/quailty_checks/
+data/processed/reads/
+data/processed/Assemblies/
+data/processed/bins/
+data/processed/MAGs/
+data/processed/metabolic_predictions/
+data/processed/Taxom/
