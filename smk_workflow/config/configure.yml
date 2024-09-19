@@ -35,19 +35,19 @@ Samples:
                 - "9"
                 - "10-12"
 #Log file pathway
-logs: "logs/"
+logs: "/projects/luo_lab/Siders_data/data/logs/"
 
 
 #Data processing pathways
-temp_files: "data/temp_files/"
+temp_files: "/projects/luo_lab/Siders_data/data/temp_files/"
 
-raw_reads: "data/raw/"
+raw_reads: "/projects/luo_lab/Siders_data/data/raw/"
 
-clean_reads: "data/processed/smk_out/reads/"
+clean_reads: "/projects/luo_lab/Siders_data/data/processed/reads/"
 
-assemblies: "data/processed/smk_out/Assemblies/"
+assemblies: "/projects/luo_lab/Siders_data/data/processed/Assemblies/"
 
-quality_checks: "data/processed/smk_out/quailty_checks/"
+quality_checks: "/projects/luo_lab/Siders_data/data/processed/quailty_checks/"
 
 
 # Program pathways that are needed

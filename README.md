@@ -81,10 +81,30 @@
     * re
     * time
 * Tools needed for snakemake pipeline.
-    * BBMap
-    * Bowtie 2
-    * metaSPAdes
+    * snakemake 7.31.1
+    * BBMap 38.97
+    * Bowtie 2 2.5.1
+    * samtools 1.18
+    * megahit 1.2.9
+    * multiqc 1.19
+    * fastqc 0.12.1
+    * quast 5.2.0
+    * anvio 7
+    * virsorter2 2.2.4
+    * checkv 1.0.1
 
 ## Running the ananlysis
 ```
+# Step 1: Run snakemake workflow:
+cd ./code/scr/python/
+sbatch pipe_line.slurm
+
+# Step 2: Bin assemblies, dereplicate bins (final MAGs), map cell enriched reads to assemblies, 
+# run GTDB on MAGs, and run kraken2 on assemblies:
+sbatch driver.slurm
+
+# Step 3: Dereplicate viral contigs to identify final vOTUs and map reads from the viral and cell enrichment to vOTU's
+sbatch virus_driver.slurm
+
+
 ```

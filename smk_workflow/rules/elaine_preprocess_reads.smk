@@ -7,7 +7,7 @@
 # 3, evaluting the trimmed (clean) reads        #
 #################################################
 
-configfile:"configure.yml"
+configfile:"/projects/luo_lab/Siders_data/smk_workflow/config/configure.yml"
 
 rule all_run:
     input:

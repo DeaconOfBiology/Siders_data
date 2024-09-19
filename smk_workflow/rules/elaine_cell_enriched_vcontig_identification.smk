@@ -29,19 +29,3 @@ rule virsorter2_id:
             virsorter config --set HMMSEARCH_THREADS={threads}
             (virsorter run --keep-original-seq -i {input.metasp} -w {output.folder}  --min-length 1500 --min-score 0.5 --include-groups "dsDNAphage,NCLDV,RNA,ssDNA,lavidaviridae" -j {threads} all --scheduler greedy) 2> {log.meta} #Set min length to 1500 to recover as many vContigs as possible
         """
-
-
-# #CheckV for quality control
-# rule checkV:
-#     input:
-#         virsorter_meta="data/processed/Viral_Assemblies/virsorter2/cell-clean_headers_pass1/final-viral-combined.fa",
-#     output:
-#         folder=directory("data/processed/Viral_Assemblies/checkv/cell-clean_headers"),
-#         outfiles=["data/processed/Viral_Assemblies/checkv/cell-clean_headers/proviruses.fna","data/processed/Viral_Assemblies/checkv/cell-clean_headers/viruses.fna"]
-#     threads: 16
-#     log: 
-#         first="logs/cell-{group}_fist_metaspades_checkv.log",
-#     shell:
-#         """
-#             (checkv end_to_end {input.virsorter_meta} {output.folder} -t {threads} -d  /users/troger50/checkv-db-v1.5) 2> {log.first}
-#         """

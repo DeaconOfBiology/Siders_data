@@ -18,7 +18,7 @@ module load mambaforge/4.14
 
 
 # Navigate to the directory containing your Snakefile and scripts
-cd /projects/luo_lab/Siders_data
+cd /projects/luo_lab/Siders_data/smk_workflow/
 
 # Run Snakemake inside the SLURM job
 mamba activate snakemake_pipe

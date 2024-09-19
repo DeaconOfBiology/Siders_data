@@ -57,4 +57,7 @@ data/processed/bins/
 data/processed/MAGs/
 data/processed/metabolic_predictions/
 data/processed/Taxonomy/
-data/processed/viral_derep_blast_dbs
+data/processed/viral_derep_blast_dbs/
+data/processed/anvio/
+code/scr/python/log_reports/
+smk_workflow/.snakemake/

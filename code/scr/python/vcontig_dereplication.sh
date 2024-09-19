@@ -44,15 +44,15 @@ fi
 # (95% ANI + 85% AF).
 
 #Step 1
-#find "$assemblies"/day?-DO-0-*-virus-*/anvio/clean_fasta_file -type f -name "contigs_clean_headers.fa" -exec cat {} + > "$assemblies"/combined_virus_contigs_clean_headers.fa
-#Step 2
+find "$assemblies"/day?-DO-0-*-virus-*/anvio/clean_fasta_file -type f -name "contigs_clean_headers.fa" -exec cat {} + > "$assemblies"/combined_virus_contigs_clean_headers.fa
+Step 2
 #makeblastdb -in "$assemblies"/combined_virus_contigs_clean_headers.fa -dbtype nucl -out "$viral_derep_blast_dbs"/viral_blast_db
-#Step 3
-#blastn -query "$assemblies"/combined_virus_contigs_clean_headers.fa -db "$viral_derep_blast_dbs"/viral_blast_db -outfmt '6 std qlen slen' -max_target_seqs 10000 -out "$viral_derep_blast_dbs"/viral_blast.tsv -num_threads 32 
+Step 3
+blastn -query "$assemblies"/combined_virus_contigs_clean_headers.fa -db "$viral_derep_blast_dbs"/viral_blast_db -outfmt '6 std qlen slen' -max_target_seqs 10000 -out "$viral_derep_blast_dbs"/viral_blast.tsv -num_threads 32 
 #Step 4
-#"$work"/code/scr/python/anicalc.py -i "$viral_derep_blast_dbs"/viral_blast.tsv -o "$viral_derep_blast_dbs"/viral_blast_ani.tsv
+"$work"/code/scr/python/anicalc.py -i "$viral_derep_blast_dbs"/viral_blast.tsv -o "$viral_derep_blast_dbs"/viral_blast_ani.tsv
 #Step 5
-#"$work"/code/scr/python/aniclust.py --fna "$assemblies"/combined_virus_contigs_clean_headers.fa --ani "$viral_derep_blast_dbs"/viral_blast_ani.tsv --out "$viral_derep_blast_dbs"/viral_blast_clusters.tsv --min_ani 95 --min_tcov 85 --min_qcov 0 
+"$work"/code/scr/python/aniclust.py --fna "$assemblies"/combined_virus_contigs_clean_headers.fa --ani "$viral_derep_blast_dbs"/viral_blast_ani.tsv --out "$viral_derep_blast_dbs"/viral_blast_clusters.tsv --min_ani 95 --min_tcov 85 --min_qcov 0 
 
 ### This code chunk uses the representative column in viral_blast_clusters.tsv to extract the representative vOTUs into their own fasta file
 cut -f1 "$viral_derep_blast_dbs"/viral_blast_clusters.tsv > "$viral_derep_blast_dbs"/representative_votus.tsv
