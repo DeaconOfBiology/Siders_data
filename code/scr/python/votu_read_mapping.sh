@@ -44,20 +44,20 @@ source ./file_paths.sh
 ### This code chunk mappes the viral enrichment reads to the representative viral contigs: 
 # mkdir "$bowtie2"/derep_viral_ce
 
-for reads in "$reads"/clean_day*cell*_r1.fq.gz
-    do
-    rdname=$(dirname ${reads})
-    rname=$(basename ${reads} _r1.fq.gz)
-    bowtie2 --threads 32 -x "$assemblies"/representative_votus_3kbp -1 ${rdname}/${rname}_r1.fq.gz -2 ${rdname}/${rname}_r2.fq.gz -S "$bowtie2"/derep_viral_ce/"$rname".sam
-    samtools view -F 2316 -bS "$bowtie2"/derep_viral_ce/"$rname".sam -o "$bowtie2"/derep_viral_ce/"$rname"-RAW.bam
-    samtools sort "$bowtie2"/derep_viral_ce/"$rname"-RAW.bam -o "$bowtie2"/derep_viral_ce/"$rname".bam
-    samtools index "$bowtie2"/derep_viral_ce/"$rname".bam
-    anvi-profile -i "$bowtie2"/derep_viral_ce/"$rname".bam -c "$contig_db"/representative_votus_3kbp.db -o "$profile_db"/derep_viral_ce/derep_"$rname"-profile
+# for reads in "$reads"/clean_day*cell*_r1.fq.gz
+#     do
+#     rdname=$(dirname ${reads})
+#     rname=$(basename ${reads} _r1.fq.gz)
+#     bowtie2 --threads 32 -x "$assemblies"/representative_votus_3kbp -1 ${rdname}/${rname}_r1.fq.gz -2 ${rdname}/${rname}_r2.fq.gz -S "$bowtie2"/derep_viral_ce/"$rname".sam
+#     samtools view -F 2316 -bS "$bowtie2"/derep_viral_ce/"$rname".sam -o "$bowtie2"/derep_viral_ce/"$rname"-RAW.bam
+#     samtools sort "$bowtie2"/derep_viral_ce/"$rname"-RAW.bam -o "$bowtie2"/derep_viral_ce/"$rname".bam
+#     samtools index "$bowtie2"/derep_viral_ce/"$rname".bam
+#     anvi-profile -i "$bowtie2"/derep_viral_ce/"$rname".bam -c "$contig_db"/representative_votus_3kbp.db -o "$profile_db"/derep_viral_ce/derep_"$rname"-profile
 
-    #echo "Removing  merged/"$rname".sam and  merged/"$rname"-RAW.bam files..."
-    rm -rf "$bowtie2"/derep_viral_ce/"$rname".sam "$bowtie2"/derep_viral_ce/"$rname"-RAW.bam
-done
+#     #echo "Removing  merged/"$rname".sam and  merged/"$rname"-RAW.bam files..."
+#     rm -rf "$bowtie2"/derep_viral_ce/"$rname".sam "$bowtie2"/derep_viral_ce/"$rname"-RAW.bam
+# done
 
-anvi-merge "$profile_db"/derep_viral_ce/derep_*virus*-profile/PROFILE.db -c "$contig_db"/representative_votus_3kbp.db -o "$merged_profile"/derep_viral_ce
+anvi-merge "$profile_db"/derep_viral_ce/derep_*cell*-profile/PROFILE.db -c "$contig_db"/representative_votus_3kbp.db -o "$merged_profile"/derep_viral_ce
 
 anvi-export-splits-and-coverages -p  "$merged_profile"/derep_viral_ce/PROFILE.db -c "$contig_db"/representative_votus_3kbp.db -o "$merged_profile"/derep_viral_ce --use-Q2Q3-coverages --report-contigs

@@ -65,7 +65,7 @@
     ├── reports
     └── rules
 ```
- # How to regenerate this repository
+# How to regenerate this repository
 
 ## Dependencies and locations
 * R packages:
@@ -105,6 +105,15 @@ sbatch driver.slurm
 
 # Step 3: Dereplicate viral contigs to identify final vOTUs and map reads from the viral and cell enrichment to vOTU's
 sbatch virus_driver.slurm
+
+# Step 4: Annotate vOTUs and cell enrichement contigs:
+sbatch metacerberus.slurm
+
+# Step 5: Calculate EAF for cell enrichment contigs, vOTUs in viral enrichment, and vOTUs in cell enrichment"
+cd ~/Siders_data/code/notebooks
+jupyter nbconvert --to script --execute --stdout ExcessAtomFraction_calculations.ipynb | python
+
+# Step 6: Write the paper:
 
 
 ```
