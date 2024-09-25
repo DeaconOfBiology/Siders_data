@@ -15,25 +15,25 @@ Siders_data
 │   │   └── ExcessAtomFraction_calculations.ipynb # jupyter notebook to calculate relative abundance and excess atom fraction of cell and viral contigs
 │   └── scr
 │       ├── python
-│       │   ├── anicalc.py                      # script from checkv used to calculate the ani of the viral contigs
-│       │   ├── aniclust.py                     # script from checkv used to cluster viral contigs based on ani
-│       │   ├── binning_individual.sh           # script used in 'driver.slurm' to bin assemblies
-│       │   ├── compress_reads.sh               # script used in 'driver.slurm' to compress '.fq' files
+│       │   ├── anicalc.py                      # calculate the ani of the viral contigs
+│       │   ├── aniclust.py                     # cluster viral contigs based on ani
+│       │   ├── binning_individual.sh           # bin assemblies
+│       │   ├── compress_reads.sh               # guzip '.fq' files
 │       │   ├── driver.slurm                    # driver script for the cell contig analysis
-│       │   ├── expand_reads.sh                 # script used in 'driver.slurm' to decompress '.fq.gz' files
-│       │   ├── file_paths.sh                   # script used in 'driver.slurm' and 'virus_driver.slurm' for file path identification
-│       │   ├── gtdbtk.sh                       # script used in 'driver.slurm' to taxonomically ID metagenome assembled genomes
-│       │   ├── gtdb_to_ncbi_majority_vote.py   # script used in 'driver.slurm' to translate gtdb taxonomy to ncbi taxonomy
-│       │   ├── kaiju_contig_taxonomy.sh        # script used in 'driver.slurm' for cell contig taxonomic identification with kaiju
-│       │   ├── kraken2.sh                      # script used in 'driver.slurm' for cell contig taxonomic identification with kraken2
-│       │   ├── mapping_drep_mags.sh            # script used in 'driver.slurm' for cell contig read mapping
-│       │   ├── metacerberus.slurm              # script used to make metabolic predictions for viral, binned, and unbinned contigs
-│       │   ├── pipe_line.slurm                 # script to run the snakemake pipeline. Includes commented out code to troubleshoot pipeline if needed
-│       │   ├── vcontig_dereplication.sh        # script used in 'virus_driver.slurm' to dereplicate viral contigs using 'anicalc.py' and 'aniclust.py' along with blastn
-│       │   ├── viral_host_matching.sh          # script used in 'virus_driver.slurm' to conducted viral host analysis with the program IPHoP
+│       │   ├── expand_reads.sh                 # decompress '.fq.gz' files
+│       │   ├── file_paths.sh                   # file path identification
+│       │   ├── gtdbtk.sh                       # taxonomically ID MAGs
+│       │   ├── gtdb_to_ncbi_majority_vote.py   # translate gtdb taxonomy to ncbi taxonomy
+│       │   ├── kaiju_contig_taxonomy.sh        # cell taxonomic identification with kaiju
+│       │   ├── kraken2.sh                      # cell taxonomic identification with kraken2
+│       │   ├── mapping_drep_mags.sh            # cell contig read mapping
+│       │   ├── metacerberus.slurm              # metabolic predictions for all contigs
+│       │   ├── pipe_line.slurm                 # script to run the snakemake pipeline
+│       │   ├── vcontig_dereplication.sh        # dereplicate viral contigs
+│       │   ├── viral_host_matching.sh          # viral host analysis with IPHoP
 │       │   ├── virus_driver.slurm              # driver script for the viral contig analysis
-│       │   ├── votu_genomad_taxa.sh            # script used in 'virus_driver.slurm' for taxonomic identification with genomad
-│       │   └── votu_read_mapping.sh            # script used in 'virus_driver.slurm' for viral contig read mapping
+│       │   ├── votu_genomad_taxa.sh            # taxonomic identification with genomad
+│       │   └── votu_read_mapping.sh            # viral contig read mapping
 │       └── R
 │           └── EAF_plots.r # script to create EAF vs DNA density figures
 ├── data
@@ -44,11 +44,11 @@ Siders_data
 │   ├── config  # configuration file(s) for snakemake pipeline
 │   ├── reports # report output of snakemake pipeline status
 │   └── rules   
-│       ├── preprocess_reads.smk                     # snakemake rules to trim QC raw reads
-│       ├── create_assemblies.smk                    # snakemake rules to assemble 
-│       ├── cell_enriched_vcontig_identification.smk # snakemake rules to idenitifying viral contigs in the cell enriched assemblies
-│       ├── cell_enriched_vcontig_reads.smk          # snakemake rules to identify cell enrichment reads that map to viral contigs in cell enrichment 
-│       └── virus_enriched_votu_identification.smk   # snakemake rules to create and identify viral contigs from cell and viral enrichments
+│       ├── preprocess_reads.smk                     # trim QC raw reads
+│       ├── create_assemblies.smk                    # assemble cell enrichment (ce)
+│       ├── cell_enriched_vcontig_identification.smk # idenitifying viral contigs in ce
+│       ├── cell_enriched_vcontig_reads.smk          # ID reads mapping to viral contigs in ce 
+│       └── virus_enriched_votu_identification.smk   # create and identify viral contigs
 ├── results 
 │   ├── figures # graphs, likely designated for manuscript figures
 │   └── tables  # tables out puts to be used in R for figures and other analyses
