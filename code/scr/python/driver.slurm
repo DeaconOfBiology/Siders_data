@@ -9,10 +9,10 @@
 #SBATCH --output=./log_reports/%x_%j.out
 
 # Run your Bash script
-bash expand_reads.sh
-bash binning_individual.sh
-bash compress_reads.sh
-bash mapping_drep_mags.sh
-bash gtdbtk.sh
-bash kraken2.sh
+#bash expand_reads.sh
+#bash binning_individual.sh
+#bash compress_reads.sh
+#bash mapping_drep_mags.sh
+#bash gtdbtk.sh
+#bash kraken2.sh
 bash kaiju_contig_taxonomy.sh

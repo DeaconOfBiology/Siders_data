@@ -1,13 +1,3 @@
-# ##################################################
-# # This is the second snake file that needs to be #
-# # generated before the analysis can move on. In  #
-# # it, we create and assess the assemblies by:    #
-# # 1. running metaspades                          #
-# # 2. running metaviralspades                     #
-# # 3. Runing QUANT for assembly stats             #
-# # 4. Running multiqc                             #
-# ##################################################
-#metaspades_1st_run
 rule megahit_1st_run:
     input:
         r1=config["clean_reads"] + "merged_reads/merged_{sample}-cell-{group}_r1.fq.gz",
@@ -15,8 +5,6 @@ rule megahit_1st_run:
     output:
         meta=config["assemblies"] + "{sample}-cell-{group}/megahit/final.contigs.fa"
     threads: 12
-    # params:
-    #     out=directory(config["assemblies"] + "{sample}-cell-{group}/megahit/")
     log:
         cell=config["logs"] + "megahit/{sample}-cell-{group}_megahit.log"
     shell:
@@ -25,7 +13,6 @@ rule megahit_1st_run:
             megahit -t {threads} -1 {input.r1} -2 {input.r2} -o data/processed/Assemblies/{wildcards.sample}-cell-{wildcards.group}/megahit/temp
             mv data/processed/Assemblies/{wildcards.sample}-cell-{wildcards.group}/megahit/temp/* data/processed/Assemblies/{wildcards.sample}-cell-{wildcards.group}/megahit/) 2> {log.cell}
         """
-            #(metaspades.py --threads {threads} -1 {input.r1} -2 {input.r2} -o {params.out}) 2> {log.cell}
 
 # Function to sanitize the cell name
 def sanitize_cell_name(cell_name):

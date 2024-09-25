@@ -1,19 +1,3 @@
-# For this, lets consider steps in https://www.protocols.io/view/viral-sequence-identification-sop-with-virsorter2-5qpvoyqebg4o/v3?step=3
-
-##################################################
-# This is the third snake file that needs to be  #
-# generated before the analysis can move on. In  #
-# it, we look for viral contigs by:              #
-# 1. using VIBRANT to look for viral signatures  #
-# 2. using VirSorter2 to look for viral          #
-# signatures                                     #
-# 3. using ViralVerify to look for viral         #
-# signatures                                     #
-# 4. using genomad to .....                      #
-# 5. using vCheck as an additional quality       #
-# check from the above outputs                   #
-##################################################
-
 # Verify viral contigs created in metaviralspades
 rule virsorter2_id:
     input:

@@ -12,7 +12,7 @@ rule merge_viral_reads:
             cat  {input.r1} {input.viral_retentate_r1}> {output.r1}
             cat  {input.r2} {input.viral_retentate_r2}> {output.r2}
         """
-#metaspades_vContigs
+
 rule megahit_vContigs:
     input:
         r1=config["clean_reads"] + "merged_reads/merged_{sample}-virus-{group}_vContig_r1.fq.gz",
@@ -20,8 +20,6 @@ rule megahit_vContigs:
     output:
         meta=config["assemblies"] + "{sample}-virus-{group}/megahit/final.contigs.fa",
     threads: 12
-    # params:
-    #     out=directory(config["assemblies"] + "{sample}-virus-{group}/megahit"),
     log:
         log=config["logs"] + "megahit/{sample}-vContig-{group}_megahit.log",
     shell:
@@ -31,9 +29,6 @@ rule megahit_vContigs:
             mv data/processed/Assemblies/{wildcards.sample}-virus-{wildcards.group}/megahit/temp/* data/processed/Assemblies/{wildcards.sample}-virus-{wildcards.group}/megahit/
             ) 2> {log.log}
         """
-            #(metaspades.py --threads {threads} -1 {input.r1} -2 {input.r2} -o {params.out}) 2> {log.log}
-
-
 
 rule vContig_virsorter2_id:
     input:
@@ -80,23 +75,9 @@ rule vContig_virsorter2_annotation_prep:
     shell:
         """
             cat {input.v1} {input.v2} > {params.v}
-
             virsorter config --set HMMSEARCH_THREADS={threads}
             (virsorter run --seqname-suffix-off --viral-gene-enrich-off --provirus-off --prep-for-dramv -i {params.v} -w {output.folder} --min-length 5000 --min-score 0.5 --include-groups "dsDNAphage,NCLDV,RNA,ssDNA,lavidaviridae" -j {threads} all --scheduler greedy) 2> {log.log}
         """
-
-# rule vContig_quast:
-#     input:
-#         samps="data/processed/Viral_Assemblies/vContig_VirSorter2_pass2/virsorter/for-dramv/final-viral-combined-for-dramv.fa",
-#     output:
-#         "quality_checks/quast/vContig/report.tsv"
-#     threads: 8
-#     params:
-#         out="quality_checks/quast/vContig/"
-#     shell:
-#         """
-#             quast.py {input} --threads {threads} -o {params.out} --space-efficient -L 
-#         """
 
 rule vContig_clean_headers:
     input:

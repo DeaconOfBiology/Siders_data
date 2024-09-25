@@ -1,10 +1,10 @@
 # 1.
-include: 'rules/elaine_preprocess_reads.smk'
+include: 'rules/preprocess_reads.smk'
 # 2.
-include: 'rules/elaine_create_assemblies.smk'
+include: 'rules/create_assemblies.smk'
 # 3.
-include: 'rules/elaine_cell_enriched_vcontig_identification.smk'
+include: 'rules/cell_enriched_vcontig_identification.smk'
 # 3.
-include: 'rules/elaine_cell_enriched_vcontig_reads.smk'
+include: 'rules/cell_enriched_vcontig_reads.smk'
 #4.
-include: 'rules/elaine_virus_enriched_votu_identification.smk'
+include: 'rules/virus_enriched_votu_identification.smk'

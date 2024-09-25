@@ -24,7 +24,6 @@ rule multiqc:
                 for g, org in config["Samples"].items()
                 for o, samp in org.items()
                 for s in samp.keys()],
-        #fastqc=[config["quality_checks"] + "fastqc/merged_{sample}-virus-{group}_r1_fastqc.html", config["quality_checks"] + "fastqc/merged_{sample}-virus-{group}_r2_fastqc.html",config["quality_checks"] + "fastqc/merged_{sample}-cell-{group}_r1_fastqc.html", config["quality_checks"] + "fastqc/merged_{sample}-cell-{group}_r2_fastqc.html"],
         scaffolds=config["quality_checks"] + "quast/report.tsv"
     output:
         config["quality_checks"] + "multiqc/multiqc_report.html"
@@ -126,5 +125,3 @@ rule merge_clean_reads:
             cat  {input.r1} > {output.r1}
             cat  {input.r2} > {output.r2}
         """
-
-# Evalutate the quality of the trimmed reads

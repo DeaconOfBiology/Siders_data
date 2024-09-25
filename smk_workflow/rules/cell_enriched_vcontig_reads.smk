@@ -1,4 +1,3 @@
-
 shell.prefix("""
 # http://linuxcommand.org/wss0150.php
 PROGNAME=$(basename $0)
@@ -20,11 +19,6 @@ rule bowtie2_index:
         scaffold=config["assemblies"] + "{sample}-cell-{group}/virsorter_first/final-viral-combined.fa"
     output:
         scaffold1=config["assemblies"] + "{sample}-cell-{group}/cell_viral_sequences_scaffold.1.bt2"
-#        scaffold2=config["assemblies"] + "cell_enriched/cell_viral_sequences_scaffold.2.bt2",
-#        scaffold3=config["assemblies"] + "cell_enriched/cell_viral_sequences_scaffold.3.bt2",
-#        scaffold4=config["assemblies"] + "cell_enriched/cell_viral_sequences_scaffold.4.bt2",
-#        scaffold5=config["assemblies"] + "cell_enriched/cell_viral_sequences_scaffold.rev.1.bt2",
-#        scaffold6=config["assemblies"] + "cell_enriched/cell_viral_sequences_scaffold.rev.2.bt2",
     params:
         scaffold=config["assemblies"] + "{sample}-cell-{group}/cell_viral_sequences_scaffold"
     threads: 8
@@ -39,11 +33,6 @@ rule bowtie2_index:
 rule bowtie2_sam:
     input:
         scaffold1=config["assemblies"] + "{sample}-cell-{group}/cell_viral_sequences_scaffold.1.bt2",
-#        scaffold2=config["assemblies"] + "cell_enriched/cell_viral_sequences_scaffold.2.bt2",
-#        scaffold3=config["assemblies"] + "cell_enriched/cell_viral_sequences_scaffold.3.bt2",
-#        scaffold4=config["assemblies"] + "cell_enriched/cell_viral_sequences_scaffold.4.bt2",
-#        scaffold5=config["assemblies"] + "cell_enriched/cell_viral_sequences_scaffold.rev.1.bt2",
-#        scaffold6=config["assemblies"] + "cell_enriched/cell_viral_sequences_scaffold.rev.2.bt2"
     output:
         sam=temp(config["temp_files"] + "vContigs_{sample}-cell-{group}_{fraction}.sam")
     threads:16

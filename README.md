@@ -41,8 +41,9 @@ Siders_data
 │   ├── raw         # raw data, will not be altered
 │   └── temp_files  # temporary data created and deleted during workflow
 ├── smk_workflow
-│   ├── config  # configuration file(s) for snakemake pipeline
-│   ├── reports # report output of snakemake pipeline status
+│   ├──Snakefile    # file with list of rule files
+│   ├── config      # configuration file(s) for snakemake pipeline
+│   ├── reports     # report output of snakemake pipeline status
 │   └── rules   
 │       ├── preprocess_reads.smk                     # trim QC raw reads
 │       ├── create_assemblies.smk                    # assemble cell enrichment (ce)
