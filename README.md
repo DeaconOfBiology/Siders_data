@@ -66,7 +66,7 @@ Siders_data
 ```
 # How to regenerate this repository
 
-## Dependencies and locations
+## Dependencies
 * R packages:
     * data.table
     * tidyverse
