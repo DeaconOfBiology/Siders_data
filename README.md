@@ -12,7 +12,7 @@ Siders_data
 ├── LICENSE # the license for this project
 ├── code
 │   ├── notebooks
-│   │   └── ExcessAtomFraction_calculations.ipynb # jupyter notebook to calculate relative abundance and excess atom fraction of cell and viral contigs
+│   │   └── ExcessAtomFraction_calculations.ipynb # lculate rel abun and excess atom fraction
 │   └── scr
 │       ├── python
 │       │   ├── anicalc.py                      # calculate the ani of the viral contigs
@@ -53,10 +53,10 @@ Siders_data
 │   ├── figures # graphs, likely designated for manuscript figures
 │   └── tables  # tables out puts to be used in R for figures and other analyses
 └── submission
-    ├── manuscript.Rmd 
-    ├── manuscript.pdf
-    ├── manuscript.tex
-    ├── references.bib
+    ├── manuscript.Rmd # executable Rmarkdown for manuscript
+    ├── manuscript.pdf # PDF version of *.Rmd file
+    ├── manuscript.tex # TeX version of *.Rmd file
+    ├── references.bib # BibTeX formatted references
     ├── figures         
     │   ├── text         # final in text figures for submission
     │   └── supplemental # final supplemental figures for submission
