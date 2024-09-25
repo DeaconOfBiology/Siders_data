@@ -63,4 +63,4 @@ code/scr/python/log_reports/
 smk_workflow/.snakemake/
 data/processed/vh_matching/
 data/processed/taxonomy/
-old_results/tables/
+results/tables/
