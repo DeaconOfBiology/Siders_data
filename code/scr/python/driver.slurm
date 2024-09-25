@@ -4,7 +4,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=32
 #SBATCH --mem=240gb
-#SBATCH --time=30-00:00:00
+#SBATCH --time=05-00:00:00
 #SBATCH --error=./log_reports/%x_%j.err
 #SBATCH --output=./log_reports/%x_%j.out
 
@@ -15,3 +15,4 @@ bash compress_reads.sh
 bash mapping_drep_mags.sh
 bash gtdbtk.sh
 bash kraken2.sh
+bash kaiju_contig_taxonomy.sh

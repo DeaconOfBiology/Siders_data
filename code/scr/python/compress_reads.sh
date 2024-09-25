@@ -7,8 +7,10 @@
 #SBATCH --time=30-00:00:00
 #SBATCH --error=./log_reports/%x_%j.err
 #SBATCH --output=./log_reports/%x_%j.out
-work="/projects/luo_lab/Rogers_SidersViralAnalysis_XXXX_20XX"
-reads="data/processed/reads/clean_reads"
+
+# List of file paths
+source ./file_paths.sh 
+
 cd "$work"
 for i in "$reads"/*_1.fastq; do mv -- "$i" "${i%_1.fastq}_r1.fq"; done
 for i in "$reads"/*_2.fastq; do mv -- "$i" "${i%_2.fastq}_r2.fq"; done

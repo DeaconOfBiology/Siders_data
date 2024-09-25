@@ -80,7 +80,7 @@
     * sklearn
     * re
     * time
-* Tools needed for snakemake pipeline.
+* Tools needed for snakemake pipeline:
     * snakemake 7.31.1
     * BBMap 38.97
     * Bowtie 2 2.5.1
@@ -92,6 +92,9 @@
     * anvio 7
     * virsorter2 2.2.4
     * checkv 1.0.1
+* Additional tools needed:
+    * gtdbtk 2.3.2
+    
 
 ## Running the ananlysis
 ```

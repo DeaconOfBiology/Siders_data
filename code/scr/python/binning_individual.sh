@@ -21,7 +21,6 @@ for assembly in $assembly_files; do
     # Extract the base name of the assembly file for creating a unique output directory
     parent_dir=$(dirname "$(dirname "$(dirname "$assembly")")") 
     assembly_name=$(basename "$parent_dir")
-    #output_dir="${parent_dir}/bins"
     output_dir="$bins"/"$assembly_name"
 
     # Run metawrap binning
