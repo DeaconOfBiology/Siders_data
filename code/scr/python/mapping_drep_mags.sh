@@ -11,11 +11,14 @@ module load anvio/7
 module load bowtie2/2.5.1
 module load samtools/1.9
 
-
-#Merge cell_enriched reads into one fasta file
+#################################################
+# Merge cell_enriched reads into one fasta file #
+#################################################
 find "$assemblies"/day?-DO-0-*-cell-*/anvio/clean_fasta_file -type f -name "contigs_clean_headers.fa" -exec cat {} + > "$assemblies"/combined_cell_contigs_clean_headers.fa
 
-#Remove contigs that belong to MAGs that are not the represenative MAGs.
+##########################################################################
+# Remove contigs that belong to MAGs that are not the represenative MAGs #
+##########################################################################
     #1. Create a list of MAGs that are not the representive MAGs
 comm -23 <(ls "$final_bins"/all_mags | sort) <(ls "$final_bins"/drep/dereplicated_genomes | sort) > "$final_bins"/removed_MAGs.txt
     
@@ -59,8 +62,9 @@ BEGIN {
     }
 }' "$assemblies"/combined_cell_contigs_clean_headers.fa > "$assemblies"/clean_dreped_contigs_removed_cell.fa
 
-
-#Run bowtie2 and anvio profile
+##################################
+# Run bowtie2 and anvio profiles #
+##################################
 bowtie2-build "$assemblies"/clean_dreped_contigs_removed_cell.fa "$assemblies"/clean_dreped_contigs_removed_cell --threads 32
 anvi-gen-contigs-database -f  "$assemblies"/clean_dreped_contigs_removed_cell.fa -o "$contig_db"/clean_dreped_contigs_removed_cell.db -n 'drep contigs removed cell' -T 32
 anvi-run-hmms -c "$contig_db"/clean_dreped_contigs_removed_cell.db -T 32 --just-do-it
