@@ -122,6 +122,7 @@ cell_eaf <- fread("/projects/luo_lab/Siders_data/results/tables/cell_eaf_taxa.cs
 trophic_EAF <- inner_join(trophic_level,cell_eaf)%>%
   select(name,contig,taxa2,cfp_present,EAF)
   
+write_csv(trophic_EAF, "/projects/luo_lab/Siders_data/results/tables/trophic_EAF.csv")
 counts <- trophic_EAF[,c("name","contig")] %>%
   group_by(name) %>%
   dplyr::summarize(num_contigs = n()) %>%

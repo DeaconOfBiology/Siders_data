@@ -93,27 +93,22 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 ```{r libraries, include = FALSE}
 library(tidyverse)
 library(data.table)
+library(devtools)
+load_all('/tmp/RtmpWqvo33/downloaded_packages')
+
+
 ```
 # Introduction
 ## Primary production in aquatic environments
-  Within aquatic systems dissolved inorganic carbon (DIC) is transformed into organic carbon and incorporated into biomass through the use of carbon fixation pathways by autotrophic organisms known as primary producers.
-* (AND) Most primary production is carried out by photoautotrophs. However, in light-limited ecosystems, primary production is primarily carried out by chemolithoautotrophs, known as dark carbon fixation (DCF). During DCF, organic carbon is produced through light-independent conversion of DIC using inorganic compounds as electron donors and acceptors in the absents of light.
-* (AND) DCF contributes a large exent of primary production in aqutic systems. 
-
-- For example: 
-  - Within deep ocean regions, DCF can reach up to 30% of surface primary production in the marine pelagic redoxcline
-  - Within deep sea hydrothermal vents, DCF production can be 2-4 orders of magnitude higher than  photosynthetic biomass reaching this depth
-  - Within terrestrial hot springs, where 35% of total MAG abundance was identified as chemolithoautotrophs [@rogers2023], DCF accounts for up to 13% of carbon sequestered from released slab carbon with little evidence of photoautotrophic fixation (Fullerton 2021).
-  - Within lake water columns, DCF contributes from 0.5 to 50% of the total carbon fixation within the whole lake.
-* (BUT) Much less is known about other components of the microbial loop within aquatic systems, such as viruses.
+  Within aquatic systems dissolved inorganic carbon (DIC) is transformed into organic carbon and incorporated into biomass through the use of carbon fixation pathways by autotrophic organisms known as primary producers. Primary producers can incorperate DIC through either photosynthetic or chemosynthetic processes. While most primary production is carried out by photoautotrophs, in light-limited ecosystems primary production is primarily carried out by chemolithoautotrophs, known as dark carbon fixation (DCF) [@baltar2019]. During DCF, organic carbon is produced through light-independent conversion of DIC using inorganic compounds as electron donors and acceptors in the absents of light [@engel2019]. Understanding the factors and processes controling microbial carbon fixation in aquatic systems is fundimental to the understanding of the global carbon cycle.
+  DCF contributes a large exent of primary production in aqutic systems. DCF production can reach up to 30% of surface primary production in the marine pelagic redoxcline [@santoro2013], can be 2-4 orders of magnitude higher than photosynthetic biomass within deep hydrothermal vents [@mcnichol2018], and can contribute between 0.3 to 50% of the total carbon fixation within the lake water columns [@santoro2013]. Within terrestrial hot springs, where around 35% of total microbial population was identified as chemolithoautotrophs [@rogers2023], DCF accounts for up to 13% of carbon sequestered from released slab carbon with little evidence of photoautotrophic fixation [@fullerton2021]. However, little is known about viral influence over the microbial loop within DCF ecosystems.
 
 ## Viral effecton DCF
-* (AND) In the photic zone of oceans, viral infections are observed in ~5-30% of the microbial cells.
-* (AND) Cell lysis transforms up to 45% of cellular organic carbon into DOC and particulate organic carbon (POC).
-* (AND) In fact, viral lysis in the surface ocean is estimated to transform ~150 gigatonnes of carbon annually.
+* (AND) In the photic zone of oceans, viral infections are observed in ~5-30% of the microbial cells [CITATION].
+* (AND) Cell lysis transforms up to 45% of cellular organic carbon into DOC and particulate organic carbon (POC) [CITATION].
+* (AND) In fact, viral lysis in the surface ocean is estimated to transform ~150 gigatonnes of carbon annually [CITATION].
 * (SOMETHING HERE ABOUT LAKE SYSTEMS)
-* (AND) This organic carbon can then flow into other trophic levels.
-
+* (AND) This organic carbon can then flow into other trophic levels [CITATION].
 * (AND) These processes have implications for carbon sequestration, biochemical cycling, and the overall balance of carbon dioxide in the atmosphere.
 
 ## Meromictic aquatic systems
@@ -155,6 +150,23 @@ Stable isotopic probing (SIP) has been used to characterize
   Raw reads were trimmed using two passes through BBDuk (v39.01; CITATION) to remove Illumina adapters and phiX with the following parameters: ktrim=r k=21 mink=11 hdist=2 tbo tpe for adapter removal during the first pass and k=27 hdist=1 qtrim=rl trimq=17 cardinality=t mingc=0.05 maxgc=0.95 for phiX removal during the second pass. Cell enriched reads from the environmental control and the inoculated samples were then assembled de novo into 3 assemblies (^12^C-cell enriched, ^13^C-cell enriched, and cell enriched environmental control) in megahit [@li2015]. Virsorter2 [@guo2021] was used to identify potential viral contigs (vContgs) within the cell enriched incubation and control assemblies. Cell enriched reads from the individual quality controlled fastq files were then mapped to potential vContigs from their corresponding assemblies to identify virus specific reads within the cell enriched reads. Virus specific reads from the cell enriched incubation and the virus enriched incubation as well as Virus specific reads from the cell enriched control and viral enriched controls were co-assembled in metaSPAdes with a minimum contig length of 1.5 kb to form 2 more assemblies (viral enriched control and viral enriched incubation). Virsorter2 was then used to identify viral operational taxonomic units (vOTUs) within the virus enriched assembly. The "anvi-script-reformat-fasta" program of anvi'o  v7.1 [@eren2015] was used to generate simplified definition lines (deflines) for each contig within the assembly sets. QUAST (vXXX; CITATION) was then used to assess quality of all 4 assembly sets. (Add in here about dereplication of vContigs before mapping. Original count 27,054. Dereplacated count 27,023)
 
 ## Metagenomic binning and taxonomic identification.
+```{r, echo=FALSE}
+mag_reps <- fread("/projects/luo_lab/Siders_data/data/processed/MAGs/drep/data_tables/Wdb.csv")
+mag_quality <- fread("/projects/luo_lab/Siders_data/data/processed/MAGs/drep/dRep.genomeInfo") %>%
+  filter(genome %in% mag_reps$genome) 
+
+mag_count <- nrow(mag_quality) #The total number of med to high quality MAGs
+mag_count_env <- mag_quality %>%
+  subset(grepl("env",genome)) %>%
+  nrow()
+mag_count_12C<- mag_quality %>%
+  subset(grepl("12C",genome)) %>%
+  nrow()
+mag_count_13C<- mag_quality %>%
+  subset(grepl("13C",genome)) %>%
+  nrow()
+
+```
   The 3 cell enriched assembles were then used to construct 158 medium to high quality metagenome assembled genomes (MAGs/bins) with ≥50% completeness and <10% contamination (Supplementary Table SX). Briefly, the Binning and Bin_refinement modules of MetaWRAP [@uritskiy2018] were used to construct the metagenomic assembled genomes (MAGs/bins). Within the Binning module MaxBin2 [@wu2016], MetaBAT2 [@kang2019], and CONCOCT [@alneberg2013] were used for curating the initial bin sets. Next, the Bin_refinement module was used to refine the bin sets into a consensus bin set for each assembly which were $\geq$ 50% completeness and $\lt$ 10% contamination (Table SX) for a total of 227 bins. Finally, the consensus bin sets were then dereplicated using dRep [@olm2017] into one consensus bin set (our final MAGs) of 158 MAGs ( 34 from ^12^C treament, 30 from ^13^C treatment, and 94 from the environmental control). dRep was used for this step as it clusters MAGs based on simularity and selects the highest quality MAG from each cluster as the representative for that cluster. This allows for dereplication and comparison of MAGs across multiple assemblies. CheckM v1.1.3 was used for both the Bin_refinement module and dRep to evaluate MAG completeness and contamination based on prokaryotic lineage-specific marker genes. 
   
 ## Annotation and taxonomic assignment
@@ -170,41 +182,68 @@ Stable isotopic probing (SIP) has been used to characterize
 
 ## General overview of the MAGs
 ```{r, echo=FALSE}
-mag_reps <- fread("../R/input_files/cluster_reps.csv")
-mag_quality <- fread("../R/input_files/drep_mag_quality.csv") %>%
-  filter(genome %in% mag_reps$genome) 
+
 near_complete_mags <- mag_quality %>%
   subset(completeness>=90 & contamination<=10)%>% 
   nrow()
 mag_count <- nrow(mag_quality)
-mag_archaea_taxa <- fread("../R/input_files/gtdbtk.ar53.summary.tsv")
+mag_archaea_taxa <- fread("/projects/luo_lab/Siders_data/data/processed/taxonomy/MAG/gtdbtk.ar53.summary.tsv")
 mag_archaea_count <- nrow(mag_archaea_taxa)
-mag_bacteria_taxa <- fread("../R/input_files/gtdbtk.bac120.summary.tsv")
+mag_bacteria_taxa <- fread("/projects/luo_lab/Siders_data/data/processed/taxonomy/MAG/gtdbtk.bac120.summary.tsv")
 mag_bacteria_count <- nrow(mag_bacteria_taxa)
 ```
-* (AND) We recovered a total of `r mag_count` medium to high quailty non-redundant MAGs [@bowers2017]. 
-* (AND) `r mag_bacteria_count` bacteria MAGs and `r mag_archaea_count` archeae MAGs are $\geq$ 50% complete with $\lt$ 5% multi-genomic contamination. 
-* (AND) Of these, `r near_complete_mags` MAGs are $\geq$ 90% complete with $\lt$ 10% contamination.
-* (BUT) However, only XXX of these are high quality based on MIMAGs criteria (CITATION (Supplementary Table SX)). 
-* (AND) The most abundant pylum was XYZ, with X, Y, and Z in much lower abundances
-* (AND) The majority of these MAGs are lineages that have no cultured representative at the family level or higher (X% of archaea and X% of bacteria).
-
-### Quantifying isotopic incorporation and predicting Metabolic capabilitys in MAGs
-* (AND) We found that shifts in DNA density reflected the carbon cycling metabolic predictions (FIG. X).
-* (AND) MAGs that were predicted to have a carbon fixation pathway had significantly larger shifts in DNA density than did those that did not have a predicted carbon fixation pathway (FIG. X).
-- For Thiomicrorhabdus (bin.XX) contains the complete Calvin Benson cylce and has a shift of XXX, while no carbon fixation pathway was predicted for Anaerolineales which had a shift of XX. 
-* (AND) By plotting the EAF of ^13^C against the AF of ^13^C, we found that binned contigs for clusters with contig members of the same MAG and that those with predicted carbon fixation pathways have an EAF that is well above the threshold of XX%.
+  We recovered a total of `r mag_count` medium to high quailty non-redundant MAGs [@bowers2017]. (`r mag_count_12C` from ^12^C treament, `r mag_count_13C` from ^13^C treatment, and `r mag_count_env` from the environmental control). `r mag_bacteria_count` bacteria MAGs and `r mag_archaea_count` archeae MAGs are $\geq$ 50% complete with $\lt$ 5% multi-genomic contamination. Of these, `r near_complete_mags` MAGs are $\geq$ 90% complete with $\lt$ 10% contamination. However, only XXX of these are high quality based on MIMAGs criteria ([@bowers2017] (Supplementary Table SX)). 
+  The most abundant pylum was W, with X, Y, and Z in much lower abundances. The majority of these MAGs are lineages that have no cultured representative at the family level or higher (X% of archaea and X% of bacteria).
 
 ## General overview of the vOTUs
-* (AND) From both the cell- and viral- enrichment, we were able to identify XX non-redundnet low quality to complete viral populations (vOTUs) with a sequence lenth of $\geq$ 5 kbp.
-* (AND) Of these, X were low quality, X were medium quality, X were high quality, and X were complete.
-* (AND) X novel polulations are not represented in publicly availible viral data bases.
-* (AND) Across all fractions, vOTUs requited X% of reads from the virus-enrichment and X% from the cell-enrichment
-* (AND) The most abundant taxonomy was X, Y, and Z.
+```{r, echo=FALSE}
 
+```
+  From both the cell- and viral- enrichment, we were able to identify XX non-redundant low quality to complete viral populations (vOTUs) with a sequence lenth of $\geq$ 5 kbp. Of these, X were low quality, X were medium quality, X were high quality, and X were complete. Of these X% of the populations were identify as temperate phage. X% represent novel populations that are not represented in publicly available viral data bases. Further, X of the novel populations contained X novel viral protiens not seen in aquatic systems. These proteins include auxiliary metabolic genes involved in X, Y, and Z. The most abundant taxonomy was X, Y, and Z.
+
+### Viral DNA contribution to total DNA
+  Across all fractions, X% of reads from the virus-enrichment and X% from the cell-enrichment mapped to vOTUs. 
+  
 ### VC ratio (maybe change to EI ratio for extracellular and intracellular abundance ratio)
+
+
+## Metabolic capabilities and carbon isotopic incorporation.
+```{r, echo=FALSE}
+# <- fread("/projects/luo_lab/Siders_data/results/tables/drep_contigs_removed_MAG_rel_abun_to_contigs.csv")
+trophic_EAF<-fread("/projects/luo_lab/Siders_data/results/tables/trophic_EAF.csv")
+total_count<- length(unique(trophic_EAF$name))
+auto_count <- length(unique(trophic_EAF$name[trophic_EAF$cfp_present!="heterotroph"]))
+hetero_count <- length(unique(trophic_EAF$name[trophic_EAF$cfp_present=="heterotroph"]))
+percent_auto<- round(auto_count/total_count*100)
+mag_eaf_df <- fread("/projects/luo_lab/Siders_data/results/tables/cell_eaf_taxa.csv") 
+mag_shift <- mag_eaf_df %>%
+  select(MAG, taxa,shift) %>%
+  subset(grepl("_bin_",MAG)) %>%
+  group_by(MAG,taxa) %>%
+  summarise(mean_shift=mean(shift)) %>%
+  ungroup %>%
+  mutate(MAG_sym = str_replace_all(
+    MAG,
+    c(
+      "^day0-DO-0-env-cell-control" = "cell_env",
+      "^day7-DO-0-12C-cell-enriched" = "cell_12C",
+      "^day7-DO-0-13C-cell-enriched" = "cell_13C"
+    )
+  ))
+
+Thio_shift <- mag_shift %>%
+  subset(grepl("Thiomicrorhabdus",taxa)) %>%
+  select(MAG_sym,mean_shift)
+Anaero_shift <- mag_shift %>%
+  subset(grepl("Anaerolineales",taxa)) %>%
+  select(MAG_sym,mean_shift)
+```
+  We were able to calculate EAF for `r total_count` of the 153 MAGs. Of these `r auto_count` (`r percent_auto`%) MAGs were predicted to contain 1 or more of the following carbon fixation pathways: CBB, rTCA, and WL. The most abundant carbon fixation pathway is CBB, followed by rTCA, with the least abundant being WL. X <taxon name> MAG contained both the X and Y pathways and have the key enzymes for both of those pathways. A BLAST analysis relieved that the top hits to these key enzymes are closely related to others in the <taxon name>, suggesting that the presents of both pathways is not due to genomic contamination.
+  The genes for CBB are found across X phyla (<phylum names>) with RuBisCO form I (X MAGs), form II (X MAGs), and form X (X MAGs). The genes for rTCA are found across X phyla (<phylum names>) while those of WL are found across X phyla (<phylum names>). All together, MAGs with the X pathway have the most diverse metabolic predictions, with predictions for X, Y, and Z. MAGs with Y pathway are predicted to contain X and Y metabolic pathway, while those with Z pathway were predicted to contain the genes for X. 
+  We found that shifts in DNA density reflected the carbon cycling metabolic predictions (FIG. X). MAGs that were predicted to have a carbon fixation pathway had significantly larger shifts in DNA density than did those that did not have a predicted carbon fixation pathway (Fig SX). For example, Thiomicrorhabdus (`r Thio_shift$MAG_sym`) contains the complete Calvin Benson cylce and has a shift of `r Thio_shift$mean_shift`, while no carbon fixation pathway was predicted for Anaerolineales (`r Anaero_shift$MAG_sym`) which had a shift of `r Anaero_shift$mean_shift` (FIG. X). By plotting the EAF of ^13^C against the AF of ^13^C, we found that binned contigs formed clusters with contig members of the same MAG and that those with predicted carbon fixation pathways have an EAF that is well above the threshold of XX%.
+
 ### Viral AMGs
-      -AMGs
+* (AND) vOTUs encoded AMGs involved in X, Y, and Z. 
 
 ### Quantifying isotopic incorporation within the vOTUs
     -^13^C incorporation
@@ -216,6 +255,8 @@ mag_bacteria_count <- nrow(mag_bacteria_taxa)
   
 # Discussion
 
+## AMGs
+  Viral auxiliary metabolic genes include a gene for Transketolase (tkt), an essential rate-limiting step in chemoautotrophic hosts that use the CBB cycle for carbon fixation. This suggests that viruses modulate dark carbon fixation within Siders pond.
 
 #\newpage
 
