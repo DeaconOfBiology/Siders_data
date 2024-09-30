@@ -29,3 +29,5 @@ metacerberus.py --minscore 1 --prodigal "$assemblies"/representative_votus.fa --
 metacerberus.py --minscore 1 --prodigal "$assemblies"/day7-DO-0-13C-cell-enriched/anvio/clean_fasta_file/contigs_clean_headers.fa --hmm ALL --dir_out "$metacerberus_contigs"/day7-DO-0-13C-cell-enriched_bs1
 metacerberus.py --minscore 1 --prodigal "$assemblies"/day7-DO-0-12C-cell-enriched/anvio/clean_fasta_file/contigs_clean_headers.fa --hmm ALL --dir_out "$metacerberus_contigs"/day7-DO-0-12C-cell-enriched_bs1
 metacerberus.py --minscore 1 --prodigal "$assemblies"/day0-DO-0-env-virus-control/anvio/clean_fasta_file/contigs_clean_headers.fa --hmm ALL --dir_out "$metacerberus_contigs"/day0-DO-0-env-virus-control_bs1
+
+
