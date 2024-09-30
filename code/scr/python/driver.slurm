@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --partition=Orion
-#SBATCH --job-name=Binning_merged_cell_assemblies
+#SBATCH --job-name=cell_enrichment_analysis
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=32
-#SBATCH --mem=240gb
+#SBATCH --ntasks-per-node=12
+#SBATCH --mem=200gb
 #SBATCH --time=05-00:00:00
 #SBATCH --error=./log_reports/%x_%j.err
 #SBATCH --output=./log_reports/%x_%j.out

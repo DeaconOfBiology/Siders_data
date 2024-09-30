@@ -5,7 +5,8 @@ library(data.table)
 library(tidyverse)
 library(ggplot2)
 library(ggtext)
-library(RColorBrewer)
+#library(RColorBrewer)
+library(viridis)
 library(gridExtra)
 
 ##########################
@@ -53,10 +54,16 @@ plot_cell_df <- cell_EAF %>%
   filter(!str_detect(taxa2, '^NR_')) %>%
   filter(!str_detect(taxa2, 'Homo')) %>%
   filter(!str_detect(taxa2, 'Human'))  %>%
-  group_by(taxa2) %>%
-  filter(n() >= 10) %>%
+  subset(phylum!="") %>%
+  group_by(phylum) %>%
+  filter(n() > 10) %>%
   ungroup()
 
+length(unique(plot_cell_df$taxa2)) #390
+length(unique(plot_cell_df$phylum)) #41
+length(unique(plot_cell_df$class)) #110
+sort(unique(plot_cell_df$taxa2))
+sort(table(plot_cell_df$taxa2))
 ##########################
 # Set up plot parameters #
 ##########################
@@ -73,7 +80,23 @@ colors3 <-c("royalblue2","cyan3","steelblue1","lightskyblue1","cadetblue","blue4
             "darkgoldenrod2","darkorange","rosybrown1","burlywood2","orange4",
             "lightsalmon3","coral1","darkseagreen4","lemonchiffon4")
 
+colors <- c(
+  "#1F78B4", "#33A02C", "#E31A1C", "#FF7F00", "#6A3D9A",
+  "#B15928", "#A6CEE3", "#B2DF8A", "#FB9A99", "#FDBF6F",
+  "#CAB2D6", "#FFFF99", "#E41A1C", "#377EB8", "#4DAF4A",
+  "#FF7F00", "#6A3D9A", "#B15928", "#FBB4AE", "#B2DF8A",
+  "#99C794", "#FFD92F", "#E41A1C", "#FFBB78", "#D9D9D9",
+  "#BC80BD", "#FFFF99", "#FF7F00", "#66C2A5", "#FC8D62",
+  "#8DA0CB", "#E78AC3", "#A6D854", "#FFD92F", "#D9D9D9",
+  "#F7F7F7", "#B2DF8A", "#FC8D62", "#8DA0CB", "#E78AC3",
+  "#A6D854", "#FFD92F", "#FF7F00", "#A6D854", "#D9D9D9",
+  "#BFD3C1", "#F6EB61", "#E31A1C", "#33A02C", "#1F78B4",
+  "#6A3D9A", "#B15928", "#D95F02", "#7570B3", "#E41A1C",
+  "#F4A582", "#D9D9D9"
+)
+
 names(colors3) <- unique(plot_cell_df$taxa2)
+names(colors) <- unique(plot_cell_df$phylum)
 
 #Parameters for viral contigs in the cell enrichment
 viral_colors_ce <- c("darkmagenta","blue4","cyan3",
@@ -93,42 +116,95 @@ names(viral_colors_ve) <- unique(viral_EAF_ve$taxa)
 ##############################
 # Plot just the cell contigs #
 ##############################
-cell_taxa_p <- plot_cell_df%>%
+#Lowest taxa identified
+cell_taxa_t <- plot_cell_df%>%
   ggplot(.,aes(x=`12C`,y=EAF, color=taxa2))+
   geom_point(aes(shape = ifelse(MAG == "unbinned", "triangle", "circle")))+
   geom_hline(yintercept = threshold, color="darkred",linetype='dashed',linewidth=1)+
-  scale_shape_manual(values = c("circle" = 19, "triangle" = 23)) +  # Use 21 for filled circles, 24 for filled triangles
-  scale_color_manual(values=colors3) +
-  ggtitle("Prokaryotic contigs")+
+  scale_shape_manual(values = c("circle" = 19, "triangle" = 23)) +
+  theme(legend.position = "none")
+  #+  # Use 21 for filled circles, 24 for filled triangles
+# cell_taxa_t
+# ggsave(file="/projects/luo_lab/Siders_data/results/figures/eaf_12C_taxa.pdf", cell_taxa_t, width = 8,height = 8)
+
+#Phylum level
+##all
+cell_taxa_p_all <- plot_cell_df %>%
+  ggplot(.,aes(x=`12C`,y=EAF, color=phylum))+
+  geom_point(aes(shape = ifelse(MAG == "unbinned", "Unbinned", "Binned")))+
+  geom_hline(yintercept = threshold, color="darkred",linetype='dashed',linewidth=1)+
+  scale_shape_manual(values = c("Binned" = 19, "Unbinned" = 23)) +
+  theme(legend.position = "none")+
+  scale_color_manual(values=colors) +
+  ggtitle("Prokaryotic contigs phylum level")+
   xlab("DNA density (12C)")+
   ylab("Excess Atom Fraction")+
-  theme_classic() +
-  theme(legend.position = "none") 
-#cell_taxa_p
-ggsave(file="/projects/luo_lab/Siders_data/submission/test_figures/eaf_12C_taxa.pdf", cell_taxa_p, width = 8,height = 8)
+  theme_classic()+ 
+  theme(legend.title = element_blank())
+
+cell_taxa_p_all
+ggsave(file="/projects/luo_lab/Siders_data/results/figures/eaf_12C_phylum_all.pdf", cell_taxa_p_all, width = 15,height = 8)
+
+##binned
+cell_taxa_p_binned <- plot_cell_df%>%
+  subset(phylum!=""&MAG!="unbinned") %>%
+  ggplot(.,aes(x=`12C`,y=EAF, color=phylum))+
+  geom_point(aes(shape = ifelse(MAG == "unbinned", "Unbinned", "Binned")))+
+  geom_hline(yintercept = threshold, color="darkred",linetype='dashed',linewidth=1)+
+  scale_shape_manual(values = c("Binned" = 19, "Unbinned" = 23)) +
+  theme(legend.position = "none")+
+  scale_color_manual(values=colors) +
+  ggtitle("Prokaryotic contigs phylum level (binned)")+
+  xlab("DNA density (12C)")+
+  ylab("Excess Atom Fraction")+
+  theme_classic()+ 
+  theme(legend.title = element_blank())
+
+cell_taxa_p_binned
+ggsave(file="/projects/luo_lab/Siders_data/results/figures/eaf_12C_phylum_binned.pdf", cell_taxa_p_binned, width = 15,height = 8)
+
+##unbinned
+cell_taxa_p_unbinned<- plot_cell_df%>%
+  subset(phylum!=""&MAG=="unbinned") %>%
+  ggplot(.,aes(x=`12C`,y=EAF, color=phylum))+
+  geom_point(aes(shape = ifelse(MAG == "unbinned", "Unbinned", "Binned")))+
+  geom_hline(yintercept = threshold, color="darkred",linetype='dashed',linewidth=1)+
+  scale_shape_manual(values = c("Binned" = 19, "Unbinned" = 23)) +
+  theme(legend.position = "none")+
+  scale_color_manual(values=colors) +
+  ggtitle("Prokaryotic contigs phylum level (unbinned)")+
+  xlab("DNA density (12C)")+
+  ylab("Excess Atom Fraction")+
+  theme_classic()+ 
+  theme(legend.title = element_blank())
+
+cell_taxa_p_unbinned
+ggsave(file="/projects/luo_lab/Siders_data/results/figures/eaf_12C_phylum_unbinned.pdf", cell_taxa_p_unbinned, width = 15,height = 8)
 
 #####################################################################
 # Plot a facet scatter plot at the phylum level of the cell contigs #
 #####################################################################
-cell_taxa_p_facet <- plot_cell_df%>%
-  ggplot(.,aes(x=`12C`,y=EAF, color=taxa2))+
+cell_phylum_p_facet <- plot_cell_df%>%
+  ggplot(.,aes(x=`12C`,y=EAF, color=phylum))+
   geom_point()+ 
   geom_hline(yintercept = threshold, color="darkred",linetype='dashed',linewidth=1)+
-  facet_wrap(~ taxa2)+ 
-  scale_color_manual(values=colors3) +
+  facet_wrap(~ phylum)+ 
+  scale_color_manual(values=colors) +
   ggtitle("Prokaryotic contigs faceted by taxa")+
   xlab("DNA density (12C)")+
   ylab("Excess Atom Fraction")+
   theme_classic() +
-  theme(legend.position = "none") 
-#cell_taxa_p_facet
-ggsave(file="/projects/luo_lab/Siders_data/submission/test_figures/eaf_12C_taxa_facet.pdf", cell_taxa_p_facet, width = 15,height = 15)
+  theme(legend.position = "none",
+  text = element_text(size = 15)) 
+cell_phylum_p_facet
+ggsave(file="/projects/luo_lab/Siders_data/results/figures/eaf_12C_phylum_facet.pdf", cell_phylum_p_facet, width = 30,height = 30)
 
 ###############################
 # Plot just the viral contigs #
 ###############################
 #Viral contigs in cell enrichment
 viral_taxa_ce_p <- viral_EAF_ce%>%
+  mutate(taxa=ifelse(taxa=="","Unclassified",taxa))%>%
   ggplot(.,aes(x=`12C`,y=EAF, color=taxa))+
   geom_point()+ 
   geom_hline(yintercept = threshold, color="darkred",linetype='dashed',linewidth=1)+
@@ -136,10 +212,9 @@ viral_taxa_ce_p <- viral_EAF_ce%>%
   ggtitle("vOTU contigs in cell-enrichment")+
   xlab("DNA density (12C)")+
   ylab("Excess Atom Fraction")+
-  theme_classic() +
-  theme(legend.position = "none") 
-#viral_taxa_ce_p
-ggsave(file="/projects/luo_lab/Siders_data/submission/test_figures/eaf_12C_viral_ce.pdf", viral_taxa_ce_p, width = 8,height = 8)
+  theme_classic()  
+viral_taxa_ce_p
+ggsave(file="/projects/luo_lab/Siders_data/results/figures/eaf_12C_viral_ce.pdf", viral_taxa_ce_p, width = 8,height = 8)
 
 #Viral contigs in viral enrichment
 viral_taxa_ve_p <- viral_EAF_ve%>%
@@ -151,19 +226,19 @@ viral_taxa_ve_p <- viral_EAF_ve%>%
   ylab("Excess Atom Fraction")+
   theme_classic() +
   theme(legend.position = "none") 
-#viral_taxa_ve_p
-ggsave(file="/projects/luo_lab/Siders_data/submission/test_figures/eaf_12C_viral_ve.pdf", viral_taxa_ve_p, width = 8,height = 8)
+viral_taxa_ve_p
+ggsave(file="/projects/luo_lab/Siders_data/results/figures/eaf_12C_viral_ve.pdf", viral_taxa_ve_p, width = 8,height = 8)
 
 ################################################################
 # Plot viral contigs in cell enrichement onto the cell contigs #
 ################################################################
 cell_viral_p <-
   ggplot()+
-  geom_point(data=plot_cell_df,aes(x=`12C`,y=EAF, color=taxa2,
+  geom_point(data=plot_cell_df,aes(x=`12C`,y=EAF, color=phylum,
     shape = ifelse(MAG == "unbinned", "triangle", "circle")))+
   scale_shape_manual(values = c("circle" = 19, 
     "triangle" = 23)) +  # Use 21 for filled circles, 24 for filled triangles
-  scale_color_manual(values=colors3) +
+  scale_color_manual(values=colors) +
   geom_point(data=viral_EAF_ce, aes(x=`12C`,y=EAF),shape=8,
     size=4)+
   geom_hline(yintercept = threshold, 
@@ -173,5 +248,5 @@ cell_viral_p <-
   ylab("Excess Atom Fraction")+
   theme_classic() +
   theme(legend.position = "none") 
-#cell_viral_p
-ggsave(file="/projects/luo_lab/Siders_data/submission/test_figures/cell_virus_eaf_12C_taxa.pdf", cell_viral_p, width = 8,height = 8)
+cell_viral_p
+ggsave(file="/projects/luo_lab/Siders_data/results/figures/cell_virus_eaf_12C_taxa.pdf", cell_viral_p, width = 8,height = 8)
