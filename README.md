@@ -35,7 +35,11 @@ Siders_data
 │       │   ├── votu_genomad_taxa.sh            # taxonomic identification with genomad
 │       │   └── votu_read_mapping.sh            # viral contig read mapping
 │       └── R
-│           └── EAF_plots.r # script to create EAF vs DNA density figures
+│           ├── EAF_plots.r                 # script to create EAF vs DNA dataframe
+│           ├── CFP_EAF.r                   # script to create EAF of CFP dataframe
+│           ├── EAF_PFAM_bitscore_table.r   # script to create PFAM EAF table
+│           ├── figures.r                   # script to make figures
+│           └── packages.r                  # script with list of packages used
 ├── data
 │   ├── processed   # cleaned data, will not be altered once created
 │   ├── raw         # raw data, will not be altered
@@ -54,10 +58,10 @@ Siders_data
 │   ├── figures # graphs, likely designated for manuscript figures
 │   └── tables  # tables out puts to be used in R for figures and other analyses
 └── submission
-    ├── manuscript.Rmd # executable Rmarkdown for manuscript
-    ├── manuscript.pdf # PDF version of *.Rmd file
-    ├── manuscript.tex # TeX version of *.Rmd file
-    ├── references.bib # BibTeX formatted references
+    ├── Siders_manuscript.Rmd # executable Rmarkdown for manuscript
+    ├── Siders_manuscript.pdf # PDF version of *.Rmd file
+    ├── Siders_manuscript.tex # TeX version of *.Rmd file
+    ├── r-references.bib # BibTeX formatted references
     ├── figures         
     │   ├── text         # final in text figures for submission
     │   └── supplemental # final supplemental figures for submission
