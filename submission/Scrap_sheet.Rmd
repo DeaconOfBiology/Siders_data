@@ -1,0 +1,33 @@
+ First, we used the total number of genome copies ($f$; determind by either qPCR for the cell enriched fractions or DNA yeild ratio for the viral enriched fraction) of density fraction ($k$) and the relative abundance ($R$) of contig $i$ within density fraction $k$ to calculate the total geomic copy per $\mu$L ($y_{ik}$) of contig $i$ within density fraction $k$ as follows:
+   
+   equation 1: $y_{ik} = R_{ik} \cdot f_{k}$
+   
+   We then determined the total number of contig copies ($y_{i}$) of contig $i$ by summing across all $K$ density fractions as follows:
+   
+   equation 2: $y_{i} = \sum_{k=1}^K y_{ik}$
+   
+   Next we calculated the density ($W_{i}$) of contig $i$ as a weighted average. This was determined by summing the density ($x_{i}$) of each fraction across all $K$ density fractions and then multiplying by the copies of contig $i$ within fraction $k$ ($y_{ik}$) as a proportion of total copies of contig $i$ ($y_{i}$), as follows:
+   
+   equation 3: $W_{i} = \sum_{k=1}^K x_{k} \cdot (y_{ik}/y_{i})$
+   
+   The density shift of contig $i$ caused by isotopic incorperation ($Z_{i}$) was determined by subtracting the total density of contig $i$ in the unlabeled treatment ($W_{LIGHT_{i}}$)from the total density of contig $i$ from the labeled treatment ($W_{LAB_{i}}$), as follows:
+   
+   equation 4: $Z_{i} = W_{LAB_{i}} - W_{LIGHT_{i}}$
+   
+   The next step is to determine the observed molecular weight of contig $i$ in the unlabled treatment ($M_{LIGHTi}$). The natural molecular weight of DNA is based on its composition of the four nucliotides. If a DNA molecule is composed of strickly adenine and thymine, then the average molecular weight would be 307.691 g mol^-1^ whereas a DNA molecule composed strickly of guanine and cytosine would have an average molecular weight of 308.187g mol^-1^. With this in mind, the natural molecular weight of DNA can be seen as a function of GC content. One method of calculating the GC content ($GC_{i}$) of contig $i$ is illustrated by Hungate et al (CITATION), who inferred the GC content using an empirical regression derived by (CITATION). However, we used a direct count method by using the program seqkit (CITATION) with the following parameters: 'seqkit fx2tab --name --only-id --gc <fasta file> > results.txt'. A regression analysis found a positive correlation between the GC values calculated by seqkit and those calculated using the empirical regression method (Fig. X). Using $GC_{i}$, we were then able to calculate the observed molecular weight of contig $i$ in the unlabled treatment ($M_{LIGHTi}$), as follows:
+   
+   equation 5: $M_{LIGHTi} = 0.496 \cdot GC_{i} + 307.691$
+   
+   Acheiveing maximium labeling requires all carbon atoms in the DNA molecule to be replace by ^13^C. Variation in carbon attoms within DNA strains are a function of the GC content. The following equation is used to calculate the theoretical maximum molecular weight of fully ^13^C-labeled DNA for taxon $i$ 
+   
+   equation 6: $M_{HEAVYMax_{i}} = -0.4987282(GC_{i})+9.974564+M_{LIGHTi}$
+   
+   equation 7: $M_{LAB_{i}}=\frac{Z_{i}}{M_{LIGHT_{i}}} \cdot M_{LIGHTi}$
+   
+   equation 8: $EAF=\frac{M_{LAB_{i}}-M_{LIGHTi}}{M_{HEAVYMax_{i}}-M_{LIGHTi}}  \cdot (1-0.01111233)$
+  
+  The excess atom fraction (EAF) was then calculated using the following equations:
+  
+  equation 6: $EAF = M_{LIGHTi}
+  
+  (Paragraph on finding cut off for EAF)
